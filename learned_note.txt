@@ -1,0 +1,54 @@
+Lesson 4: Locator & Selector in Playwright
+
+1. Định nghĩa
+- HTML: Ngôn ngữ đánh dấu để tạo cấu trúc trang web.
+- DOM (Document Object Model): Mô hình cây của trang web do trình duyệt tạo ra từ HTML, có thể thay đổi bằng JavaScript.
+- Locator: Đối tượng trong Playwright dùng để tương tác với phần tử trên trang web.
+- Selector: Chuỗi dùng để tìm phần tử trên trang web (CSS, XPath, Role, v.v.).
+
+Tiêu chí | Selector | Locator
+---------|----------|---------
+Định nghĩa | Chuỗi tìm kiếm phần tử | Đối tượng Playwright đại diện cho phần tử
+Cách sử dụng | Dùng trong `page.locator(selector)` để tạo locator | Dùng để thao tác trên phần tử
+Ví dụ | `'button#submit'` | `const btn = page.locator('button#submit')`
+Phương thức | Không có phương thức đi kèm | `.click()`, `.fill()`, `.hover()`
+
+2. Các cách định vị locator có sẵn trong Playwright
+- `page.getByRole(role, options)` → Tìm theo vai trò (button, link, v.v.).
+- `page.getByText(text, options)` → Tìm theo nội dung văn bản.
+- `page.getByLabel(label, options)` → Tìm theo label của input.
+- `page.getByPlaceholder(placeholder, options)` → Tìm theo placeholder của input.
+- `page.getByAltText(alt, options)` → Tìm theo văn bản thay thế (alt text) của hình ảnh.
+- `page.getByTitle(title, options)` → Tìm theo thuộc tính `title`.
+- `page.getByTestId(testId, options)` → Tìm theo thuộc tính `data-testid`.
+
+Khi có nhiều phần tử trùng nhau, có thể dùng `filter` để chọn phần tử mong muốn.
+
+3. Tạo Locator bằng Selector
+Ngoài các phương thức có sẵn của Playwright, có thể sử dụng **CSS Selector** và **XPath Selector** để tạo locator.
+
+3.1. CSS Selector
+- Theo ID: `#id`
+- Theo class: `.class`
+- Theo tên thẻ: `tagname`
+- Theo thuộc tính: `[attribute=value]`
+
+3.2. XPath Selector
+- Absolute XPath: Xác định phần tử từ gốc của HTML (bắt đầu bằng `/`).
+- Relative XPath: Xác định phần tử dựa vào phần tử khác, không cần đi từ gốc (bắt đầu bằng `//`).
+  - ✅ Nên dùng Relative XPath vì gọn, linh hoạt, ít bị ảnh hưởng khi HTML thay đổi.
+
+Ví dụ XPath:
+```xpath
+//div[@id='main']
+//a[contains(text(), 'CSS Reference')]
+```
+
+Tổng kết
+- Locator giúp thao tác với phần tử trên trang web.
+- Selector là cách để tìm phần tử (CSS, XPath, Role, v.v.).
+- Playwright có nhiều cách lấy phần tử như `getByText()`, `getByRole()`, `getByTestId()`, v.v.
+- Có thể tạo locator bằng **CSS Selector** và **XPath Selector**.
+
+Lưu ý: Luôn ưu tiên **CSS Selector** và **Relative XPath** để đảm bảo hiệu suất và độ ổn định cao nhất.
+
